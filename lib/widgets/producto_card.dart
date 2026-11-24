@@ -15,78 +15,73 @@ class ProductoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textoDescripcion = producto.descripcion.trim().isEmpty
-        ? 'Sin descripción'
-        : producto.descripcion;
+    final sinDescripcion = producto.descripcion.trim().isEmpty;
+    final textoDescripcion =
+        sinDescripcion ? 'Sin descripción' : producto.descripcion;
 
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    producto.nombre,
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    textoDescripcion,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: producto.descripcion.trim().isEmpty
-                          ? Colors.grey[600]
-                          : Colors.black87,
-                      fontStyle: producto.descripcion.trim().isEmpty
-                          ? FontStyle.italic
-                          : FontStyle.normal,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Chip(
-                        label: Text(
-                          'Precio: \$${producto.precio.toStringAsFixed(2)}',
-                          style: const TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                        backgroundColor: Colors.green.shade50,
-                      ),
-                      const SizedBox(width: 8),
-                      Chip(
-                        label: Text(
-                          'Stock: ${producto.cantidad}',
-                          style: const TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                        backgroundColor: Colors.blue.shade50,
-                      ),
-                    ],
-                  ),
-                ],
+      margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Colors.teal.shade100),
+      ),
+      elevation: 1.5,
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        leading: CircleAvatar(
+          backgroundColor: const Color(0xFF0F766E),
+          foregroundColor: Colors.white,
+          child: Text(
+            producto.nombre.isNotEmpty
+                ? producto.nombre[0].toUpperCase()
+                : 'P',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        title: Text(
+          producto.nombre,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                textoDescripcion,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: sinDescripcion ? Colors.grey[600] : Colors.black87,
+                  fontStyle:
+                      sinDescripcion ? FontStyle.italic : FontStyle.normal,
+                ),
               ),
+              const SizedBox(height: 6),
+              Text(
+                'Precio: \$${producto.precio.toStringAsFixed(2)}  •  Disponibles: ${producto.cantidad}',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.teal.shade800,
+                ),
+              ),
+            ],
+          ),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.edit_outlined, color: Colors.teal),
+              tooltip: 'Editar producto',
+              onPressed: onEditar,
             ),
-            Column(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.edit, color: Colors.blue),
-                  tooltip: 'Editar producto',
-                  onPressed: onEditar,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  tooltip: 'Eliminar producto',
-                  onPressed: onEliminar,
-                ),
-              ],
+            IconButton(
+              icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+              tooltip: 'Eliminar producto',
+              onPressed: onEliminar,
             ),
           ],
         ),

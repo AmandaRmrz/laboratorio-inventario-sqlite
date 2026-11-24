@@ -15,9 +15,17 @@ class InventarioApp extends StatelessWidget {
       title: 'Inventario',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-        useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: const Color(0xFF0F766E), 
+        brightness: Brightness.light,
       ),
+      useMaterial3: true,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xFF0F766E),
+        foregroundColor: Colors.white,
+        elevation: 2,
+      ),
+),
       home: const ListaProductosScreen(),
     );
   }
